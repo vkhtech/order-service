@@ -1,15 +1,19 @@
 package org.vkhoma.orderservice.order.domain;
 
 import org.springframework.stereotype.Service;
+import org.vkhoma.orderservice.book.Book;
+import org.vkhoma.orderservice.book.BookClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
 public class OrderService {
 
+    private final BookClient bookClient;
     private final OrderRepository orderRepository;
 
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(BookClient bookClient, OrderRepository orderRepository) {
+        this.bookClient = bookClient;
         this.orderRepository = orderRepository;
     }
 
@@ -18,8 +22,17 @@ public class OrderService {
     }
 
     public Mono<Order> submitOrder(String isbn, int quantity) {
-        return Mono.just(buildRejectedOrder(isbn, quantity))
+        return bookClient.getBookByIsbn(isbn)
+                .map(book -> buildAcceptedOrder(book, quantity))
+                .defaultIfEmpty(
+                        buildRejectedOrder(isbn, quantity)
+                )
                 .flatMap(orderRepository::save);
+    }
+
+    private static Order buildAcceptedOrder(Book book, int quantity) {
+        return Order.of(book.isbn(), book.title() + " - " + book.author(),
+                book.price(), quantity, OrderStatus.ACCEPTED);
     }
 
     public static Order buildRejectedOrder(String bookIsbn, int quantity) {
