@@ -1,4 +1,4 @@
-package org.vkhoma.order_service;
+package org.vkhoma.orderservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

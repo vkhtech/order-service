@@ -1,4 +1,4 @@
-package org.vkhoma.order_service;
+package org.vkhoma.orderservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
