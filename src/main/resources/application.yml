@@ -30,7 +30,19 @@ spring:
         dispatchOrder-in-0:
           destination: order-dispatched
           group: ${spring.application.name}
-
+        acceptOrder-out-0:
+          destination: order-accepted
+      rabbit:
+        bindings:
+          acceptOrder-out-0:
+            producer:
+              transacted: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+    connection-timeout: 5s
   r2dbc:
     username: user
     password: password
@@ -39,12 +51,6 @@ spring:
       max-create-connection-time: 2s
       initial-size: 5
       max-size: 10
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: user
-    password: password
-    connection-timeout: 5s
   flyway:
     user: ${spring.r2dbc.username}
     password: ${spring.r2dbc.password}
