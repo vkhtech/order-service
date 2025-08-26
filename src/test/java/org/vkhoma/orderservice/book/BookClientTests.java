@@ -70,8 +70,4 @@ class BookClientTests {
                 .verifyComplete();
     }
 
-    @AfterEach
-    void clean() throws IOException {
-        this.mockWebServer.shutdown();
-    }
 }
