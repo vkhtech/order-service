@@ -1,5 +1,7 @@
 package org.vkhoma.orderservice.order.web;
 
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.vkhoma.orderservice.order.domain.Order;
 import org.vkhoma.orderservice.order.domain.OrderService;
@@ -19,8 +21,10 @@ public class OrderController {
     }
 
     @GetMapping
-    public Flux<Order> getAllOrders() {
-        return orderService.getAllOrders();
+    public Flux<Order> getAllOrders(
+            @AuthenticationPrincipal Jwt jwt
+    ) {
+        return orderService.getAllOrders(jwt.getSubject());
     }
 
     @PostMapping
