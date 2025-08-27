@@ -1,8 +1,12 @@
 package org.vkhoma.orderservice.order.web;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.vkhoma.orderservice.order.domain.Order;
 import org.vkhoma.orderservice.order.domain.OrderService;
 import reactor.core.publisher.Flux;
